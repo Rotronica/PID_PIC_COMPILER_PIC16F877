@@ -1,0 +1,560 @@
+CCS PCM C Compiler, Version 4.016, 36208               20-may-07 21:41
+
+               Filename: E:\libro\ejemplos\T6_E5\T6_E5.lst
+
+               ROM used: 1304 words (16%)
+                         Largest free fragment is 2048
+               RAM used: 79 (21%) at main() level
+                         101 (27%) worst case
+               Stack:    1 locations
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   34C
+0003:  NOP
+.................... #INCLUDE <16F877.h> 
+.................... //////// Standard Header file for the PIC16F877 device //////////////// 
+.................... #device PIC16F877 
+.................... #list 
+....................  
+.................... #device adc=10 
+.................... #use delay(clock=4000000)         
+0335:  MOVLW  65
+0336:  MOVWF  04
+0337:  BCF    03.7
+0338:  MOVF   00,W
+0339:  BTFSC  03.2
+033A:  GOTO   349
+033B:  MOVLW  01
+033C:  MOVWF  78
+033D:  CLRF   77
+033E:  DECFSZ 77,F
+033F:  GOTO   33E
+0340:  DECFSZ 78,F
+0341:  GOTO   33D
+0342:  MOVLW  4A
+0343:  MOVWF  77
+0344:  DECFSZ 77,F
+0345:  GOTO   344
+0346:  GOTO   347
+0347:  DECFSZ 00,F
+0348:  GOTO   33B
+0349:  BCF    0A.3
+034A:  BCF    0A.4
+034B:  GOTO   516 (RETURN)
+.................... #fuses XT,NOWDT 
+.................... #BYTE TRISC = 0x87                    
+....................                                        
+.................... void main(){ 
+034C:  CLRF   04
+034D:  BCF    03.7
+034E:  MOVLW  1F
+034F:  ANDWF  03,F
+0350:  BSF    03.5
+0351:  BSF    1F.0
+0352:  BSF    1F.1
+0353:  BSF    1F.2
+0354:  BCF    1F.3
+.................... int16 valor;                  //lectura de temperatura 
+.................... int16 control;                //valor del PWM 
+.................... float a,b,c;                  //constantes del PID 
+.................... float temp_limit;            //temperatura a alcanzar 
+.................... float rT,eT,iT,dT,yT,uT,iT0,eT0,iT_1,eT_1;     //variables de ecuaciones             
+.................... float max,min;               //límites máximo y mínimo de control. 
+....................                                  
+.................... min=0.0;                    //inicialización variables  
+*
+0358:  CLRF   64
+0359:  CLRF   63
+035A:  CLRF   62
+035B:  CLRF   61
+.................... max=1000.0; 
+035C:  CLRF   60
+035D:  CLRF   5F
+035E:  MOVLW  7A
+035F:  MOVWF  5E
+0360:  MOVLW  88
+0361:  MOVWF  5D
+.................... iT_1=0.0; 
+0362:  CLRF   58
+0363:  CLRF   57
+0364:  CLRF   56
+0365:  CLRF   55
+.................... eT_1=0.0; 
+0366:  CLRF   5C
+0367:  CLRF   5B
+0368:  CLRF   5A
+0369:  CLRF   59
+.................... a=0.1243;                     //constantes del PID  
+036A:  CLRF   28
+036B:  MOVLW  91
+036C:  MOVWF  27
+036D:  MOVLW  7E
+036E:  MOVWF  26
+036F:  MOVLW  7B
+0370:  MOVWF  25
+.................... b=0.0062; 
+0371:  MOVLW  5F
+0372:  MOVWF  2C
+0373:  MOVLW  29
+0374:  MOVWF  2B
+0375:  MOVLW  4B
+0376:  MOVWF  2A
+0377:  MOVLW  77
+0378:  MOVWF  29
+.................... c=0.6215; 
+0379:  MOVLW  A0
+037A:  MOVWF  30
+037B:  MOVLW  1A
+037C:  MOVWF  2F
+037D:  MOVLW  1F
+037E:  MOVWF  2E
+037F:  MOVLW  7E
+0380:  MOVWF  2D
+.................... temp_limit=500.0;          //Temperatura a alcanzar  
+0381:  CLRF   34
+0382:  CLRF   33
+0383:  MOVLW  7A
+0384:  MOVWF  32
+0385:  MOVLW  87
+0386:  MOVWF  31
+.................... TRISC=0; 
+0387:  BSF    03.5
+0388:  CLRF   07
+.................... setup_timer_2(t2_div_by_4,249,1);     //periodo de la señal PWM a 1ms   
+0389:  MOVLW  00
+038A:  MOVWF  78
+038B:  IORLW  05
+038C:  BCF    03.5
+038D:  MOVWF  12
+038E:  MOVLW  F9
+038F:  BSF    03.5
+0390:  MOVWF  12
+.................... setup_ccp1(ccp_pwm);                  //Módulo CCP a modo PWM 
+*
+0355:  MOVLW  FF
+0356:  BCF    03.5
+0357:  MOVWF  20
+*
+0391:  BCF    03.5
+0392:  BCF    20.2
+0393:  MOVF   20,W
+0394:  BSF    03.5
+0395:  MOVWF  07
+0396:  BCF    03.5
+0397:  BCF    07.2
+0398:  MOVLW  0C
+0399:  MOVWF  17
+.................... setup_adc_ports(all_analog);         //Puerto A analógico 
+039A:  BSF    03.5
+039B:  BCF    1F.0
+039C:  BCF    1F.1
+039D:  BCF    1F.2
+039E:  BCF    1F.3
+.................... setup_adc(ADC_CLOCK_INTERNAL);       //reloj convertidor AD interno 
+039F:  BCF    03.5
+03A0:  BSF    1F.6
+03A1:  BSF    1F.7
+03A2:  BSF    03.5
+03A3:  BSF    1F.7
+03A4:  BCF    03.5
+03A5:  BSF    1F.0
+.................... set_adc_channel(0);                  //Lectura por el canal 0 
+03A6:  MOVLW  00
+03A7:  MOVWF  78
+03A8:  MOVF   1F,W
+03A9:  ANDLW  C7
+03AA:  IORWF  78,W
+03AB:  MOVWF  1F
+.................... while(1) { 
+....................                                    
+....................   valor=read_adc();                 //Lectura de la temperatura 
+03AC:  BSF    1F.2
+03AD:  BTFSC  1F.2
+03AE:  GOTO   3AD
+03AF:  BSF    03.5
+03B0:  MOVF   1E,W
+03B1:  BCF    03.5
+03B2:  MOVWF  21
+03B3:  MOVF   1E,W
+03B4:  MOVWF  22
+....................   yT=valor*5000.0/1024.0;           //conversión a mV (0.25V a 250mV) 
+03B5:  MOVF   22,W
+03B6:  MOVWF  66
+03B7:  MOVF   21,W
+03B8:  MOVWF  65
+03B9:  GOTO   004
+03BA:  MOVF   7A,W
+03BB:  MOVWF  68
+03BC:  MOVF   79,W
+03BD:  MOVWF  67
+03BE:  MOVF   78,W
+03BF:  MOVWF  66
+03C0:  MOVF   77,W
+03C1:  MOVWF  65
+03C2:  CLRF   6C
+03C3:  MOVLW  40
+03C4:  MOVWF  6B
+03C5:  MOVLW  1C
+03C6:  MOVWF  6A
+03C7:  MOVLW  8B
+03C8:  MOVWF  69
+03C9:  CALL   023
+03CA:  MOVF   77,W
+03CB:  MOVWF  65
+03CC:  MOVF   78,W
+03CD:  MOVWF  66
+03CE:  MOVF   79,W
+03CF:  MOVWF  67
+03D0:  MOVF   7A,W
+03D1:  MOVWF  68
+03D2:  MOVWF  6C
+03D3:  MOVF   79,W
+03D4:  MOVWF  6B
+03D5:  MOVF   78,W
+03D6:  MOVWF  6A
+03D7:  MOVF   77,W
+03D8:  MOVWF  69
+03D9:  CLRF   70
+03DA:  CLRF   6F
+03DB:  CLRF   6E
+03DC:  MOVLW  89
+03DD:  MOVWF  6D
+03DE:  GOTO   098
+03DF:  MOVF   7A,W
+03E0:  MOVWF  48
+03E1:  MOVF   79,W
+03E2:  MOVWF  47
+03E3:  MOVF   78,W
+03E4:  MOVWF  46
+03E5:  MOVF   77,W
+03E6:  MOVWF  45
+....................   rT=temp_limit;                     
+03E7:  MOVF   34,W
+03E8:  MOVWF  38
+03E9:  MOVF   33,W
+03EA:  MOVWF  37
+03EB:  MOVF   32,W
+03EC:  MOVWF  36
+03ED:  MOVF   31,W
+03EE:  MOVWF  35
+....................   eT=rT-yT;                             //Cálculo error         
+03EF:  BSF    03.1
+03F0:  MOVF   38,W
+03F1:  MOVWF  6C
+03F2:  MOVF   37,W
+03F3:  MOVWF  6B
+03F4:  MOVF   36,W
+03F5:  MOVWF  6A
+03F6:  MOVF   35,W
+03F7:  MOVWF  69
+03F8:  MOVF   48,W
+03F9:  MOVWF  70
+03FA:  MOVF   47,W
+03FB:  MOVWF  6F
+03FC:  MOVF   46,W
+03FD:  MOVWF  6E
+03FE:  MOVF   45,W
+03FF:  MOVWF  6D
+0400:  CALL   164
+0401:  MOVF   7A,W
+0402:  MOVWF  3C
+0403:  MOVF   79,W
+0404:  MOVWF  3B
+0405:  MOVF   78,W
+0406:  MOVWF  3A
+0407:  MOVF   77,W
+0408:  MOVWF  39
+....................   iT=b*eT+iT0;                         //Cálculo del término integral 
+0409:  MOVF   2C,W
+040A:  MOVWF  68
+040B:  MOVF   2B,W
+040C:  MOVWF  67
+040D:  MOVF   2A,W
+040E:  MOVWF  66
+040F:  MOVF   29,W
+0410:  MOVWF  65
+0411:  MOVF   3C,W
+0412:  MOVWF  6C
+0413:  MOVF   3B,W
+0414:  MOVWF  6B
+0415:  MOVF   3A,W
+0416:  MOVWF  6A
+0417:  MOVF   39,W
+0418:  MOVWF  69
+0419:  CALL   023
+041A:  MOVF   77,W
+041B:  MOVWF  65
+041C:  MOVF   78,W
+041D:  MOVWF  66
+041E:  MOVF   79,W
+041F:  MOVWF  67
+0420:  MOVF   7A,W
+0421:  MOVWF  68
+0422:  BCF    03.1
+0423:  MOVF   7A,W
+0424:  MOVWF  6C
+0425:  MOVF   79,W
+0426:  MOVWF  6B
+0427:  MOVF   78,W
+0428:  MOVWF  6A
+0429:  MOVF   77,W
+042A:  MOVWF  69
+042B:  MOVF   50,W
+042C:  MOVWF  70
+042D:  MOVF   4F,W
+042E:  MOVWF  6F
+042F:  MOVF   4E,W
+0430:  MOVWF  6E
+0431:  MOVF   4D,W
+0432:  MOVWF  6D
+0433:  CALL   164
+0434:  MOVF   7A,W
+0435:  MOVWF  40
+0436:  MOVF   79,W
+0437:  MOVWF  3F
+0438:  MOVF   78,W
+0439:  MOVWF  3E
+043A:  MOVF   77,W
+043B:  MOVWF  3D
+....................   dT=c*(eT-eT0);                       //Cálculo del término derivativo  
+043C:  BSF    03.1
+043D:  MOVF   3C,W
+043E:  MOVWF  6C
+043F:  MOVF   3B,W
+0440:  MOVWF  6B
+0441:  MOVF   3A,W
+0442:  MOVWF  6A
+0443:  MOVF   39,W
+0444:  MOVWF  69
+0445:  MOVF   54,W
+0446:  MOVWF  70
+0447:  MOVF   53,W
+0448:  MOVWF  6F
+0449:  MOVF   52,W
+044A:  MOVWF  6E
+044B:  MOVF   51,W
+044C:  MOVWF  6D
+044D:  CALL   164
+044E:  MOVF   30,W
+044F:  MOVWF  68
+0450:  MOVF   2F,W
+0451:  MOVWF  67
+0452:  MOVF   2E,W
+0453:  MOVWF  66
+0454:  MOVF   2D,W
+0455:  MOVWF  65
+0456:  MOVF   7A,W
+0457:  MOVWF  6C
+0458:  MOVF   79,W
+0459:  MOVWF  6B
+045A:  MOVF   78,W
+045B:  MOVWF  6A
+045C:  MOVF   77,W
+045D:  MOVWF  69
+045E:  CALL   023
+045F:  MOVF   7A,W
+0460:  MOVWF  44
+0461:  MOVF   79,W
+0462:  MOVWF  43
+0463:  MOVF   78,W
+0464:  MOVWF  42
+0465:  MOVF   77,W
+0466:  MOVWF  41
+....................   uT=iT+a*eT+dT;                      //Cálculo de la salida PID 
+0467:  MOVF   28,W
+0468:  MOVWF  68
+0469:  MOVF   27,W
+046A:  MOVWF  67
+046B:  MOVF   26,W
+046C:  MOVWF  66
+046D:  MOVF   25,W
+046E:  MOVWF  65
+046F:  MOVF   3C,W
+0470:  MOVWF  6C
+0471:  MOVF   3B,W
+0472:  MOVWF  6B
+0473:  MOVF   3A,W
+0474:  MOVWF  6A
+0475:  MOVF   39,W
+0476:  MOVWF  69
+0477:  CALL   023
+0478:  BCF    03.1
+0479:  MOVF   40,W
+047A:  MOVWF  6C
+047B:  MOVF   3F,W
+047C:  MOVWF  6B
+047D:  MOVF   3E,W
+047E:  MOVWF  6A
+047F:  MOVF   3D,W
+0480:  MOVWF  69
+0481:  MOVF   7A,W
+0482:  MOVWF  70
+0483:  MOVF   79,W
+0484:  MOVWF  6F
+0485:  MOVF   78,W
+0486:  MOVWF  6E
+0487:  MOVF   77,W
+0488:  MOVWF  6D
+0489:  CALL   164
+048A:  MOVF   77,W
+048B:  MOVWF  65
+048C:  MOVF   78,W
+048D:  MOVWF  66
+048E:  MOVF   79,W
+048F:  MOVWF  67
+0490:  MOVF   7A,W
+0491:  MOVWF  68
+0492:  BCF    03.1
+0493:  MOVF   7A,W
+0494:  MOVWF  6C
+0495:  MOVF   79,W
+0496:  MOVWF  6B
+0497:  MOVF   78,W
+0498:  MOVWF  6A
+0499:  MOVF   77,W
+049A:  MOVWF  69
+049B:  MOVF   44,W
+049C:  MOVWF  70
+049D:  MOVF   43,W
+049E:  MOVWF  6F
+049F:  MOVF   42,W
+04A0:  MOVWF  6E
+04A1:  MOVF   41,W
+04A2:  MOVWF  6D
+04A3:  CALL   164
+04A4:  MOVF   7A,W
+04A5:  MOVWF  4C
+04A6:  MOVF   79,W
+04A7:  MOVWF  4B
+04A8:  MOVF   78,W
+04A9:  MOVWF  4A
+04AA:  MOVF   77,W
+04AB:  MOVWF  49
+....................   if (uT>max) {        //Salida PID si es mayor que el MAX  
+04AC:  MOVF   60,W
+04AD:  MOVWF  68
+04AE:  MOVF   5F,W
+04AF:  MOVWF  67
+04B0:  MOVF   5E,W
+04B1:  MOVWF  66
+04B2:  MOVF   5D,W
+04B3:  MOVWF  65
+04B4:  MOVF   4C,W
+04B5:  MOVWF  6C
+04B6:  MOVF   4B,W
+04B7:  MOVWF  6B
+04B8:  MOVF   4A,W
+04B9:  MOVWF  6A
+04BA:  MOVF   49,W
+04BB:  MOVWF  69
+04BC:  CALL   2D5
+04BD:  BTFSS  03.0
+04BE:  GOTO   4C8
+....................      uT=max;}                           
+04BF:  MOVF   60,W
+04C0:  MOVWF  4C
+04C1:  MOVF   5F,W
+04C2:  MOVWF  4B
+04C3:  MOVF   5E,W
+04C4:  MOVWF  4A
+04C5:  MOVF   5D,W
+04C6:  MOVWF  49
+....................   else { 
+04C7:  GOTO   4E3
+....................      if (uT<min){      //Salida PID si es menor que el MIN  
+04C8:  MOVF   4C,W
+04C9:  MOVWF  68
+04CA:  MOVF   4B,W
+04CB:  MOVWF  67
+04CC:  MOVF   4A,W
+04CD:  MOVWF  66
+04CE:  MOVF   49,W
+04CF:  MOVWF  65
+04D0:  MOVF   64,W
+04D1:  MOVWF  6C
+04D2:  MOVF   63,W
+04D3:  MOVWF  6B
+04D4:  MOVF   62,W
+04D5:  MOVWF  6A
+04D6:  MOVF   61,W
+04D7:  MOVWF  69
+04D8:  CALL   2D5
+04D9:  BTFSS  03.0
+04DA:  GOTO   4E3
+....................         uT=min;}                            
+04DB:  MOVF   64,W
+04DC:  MOVWF  4C
+04DD:  MOVF   63,W
+04DE:  MOVWF  4B
+04DF:  MOVF   62,W
+04E0:  MOVWF  4A
+04E1:  MOVF   61,W
+04E2:  MOVWF  49
+....................         }                              
+....................   control=uT;                     //Transferencia de salida PID a señal PWM 
+04E3:  MOVF   4C,W
+04E4:  MOVWF  68
+04E5:  MOVF   4B,W
+04E6:  MOVWF  67
+04E7:  MOVF   4A,W
+04E8:  MOVWF  66
+04E9:  MOVF   49,W
+04EA:  MOVWF  65
+04EB:  GOTO   314
+04EC:  MOVF   79,W
+04ED:  MOVWF  24
+04EE:  MOVF   78,W
+04EF:  MOVWF  23
+....................   set_pwm1_duty(control); 
+04F0:  MOVF   24,W
+04F1:  MOVWF  79
+04F2:  MOVF   23,W
+04F3:  MOVWF  78
+04F4:  RRF    79,F
+04F5:  RRF    78,F
+04F6:  RRF    79,F
+04F7:  RRF    78,F
+04F8:  RRF    79,F
+04F9:  MOVF   78,W
+04FA:  MOVWF  15
+04FB:  RRF    79,F
+04FC:  RRF    79,W
+04FD:  ANDLW  30
+04FE:  MOVWF  77
+04FF:  MOVF   17,W
+0500:  ANDLW  CF
+0501:  IORWF  77,W
+0502:  MOVWF  17
+....................   iT0=iT;                        //Guardar variables 
+0503:  MOVF   40,W
+0504:  MOVWF  50
+0505:  MOVF   3F,W
+0506:  MOVWF  4F
+0507:  MOVF   3E,W
+0508:  MOVWF  4E
+0509:  MOVF   3D,W
+050A:  MOVWF  4D
+....................   eT0=eT; 
+050B:  MOVF   3C,W
+050C:  MOVWF  54
+050D:  MOVF   3B,W
+050E:  MOVWF  53
+050F:  MOVF   3A,W
+0510:  MOVWF  52
+0511:  MOVF   39,W
+0512:  MOVWF  51
+....................                                                                   
+....................   delay_ms(100);                //Tiempo de muestreo 
+0513:  MOVLW  64
+0514:  MOVWF  65
+0515:  GOTO   335
+....................   } 
+0516:  GOTO   3AC
+.................... } 
+....................  
+0517:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3F71   XT NOWDT PUT NOPROTECT BROWNOUT NOLVP NOCPD NOWRT NODEBUG

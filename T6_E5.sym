@@ -1,0 +1,109 @@
+004-005 @WRITE_PROGRAM_MEMORY.P1
+004-005 @READ_PROGRAM_MEMORY.P2
+008     PSP_DATA
+015     CCP_1_LOW
+015-016 CCP_1
+016     CCP_1_HIGH
+01B-01C CCP_2
+01B     CCP_2_LOW
+01C     CCP_2_HIGH
+020     @TRIS_C
+021-022 main.valor
+023-024 main.control
+025-028 main.a
+029-02C main.b
+02D-030 main.c
+031-034 main.temp_limit
+035-038 main.rT
+039-03C main.eT
+03D-040 main.iT
+041-044 main.dT
+045-048 main.yT
+049-04C main.uT
+04D-050 main.iT0
+051-054 main.eT0
+055-058 main.iT_1
+059-05C main.eT_1
+05D-060 main.max
+061-064 main.min
+065-068 @SFTOI.P1
+065-068 @FLT.P2
+065     @delay_ms1.P3
+065-068 @MULFF.P4
+065-066 @ITOF.P5
+065     main.@SCRATCH
+066     main.@SCRATCH
+067     main.@SCRATCH
+068     main.@SCRATCH
+069-06C @FLT.P1
+069-06C @ADDFF.P2
+069-06C @DIVFF.P3
+069-06C @MULFF.P4
+06D-070 @DIVFF.P1
+06D-070 @ADDFF.P2
+06D     @MULFF.@SCRATCH
+06D     @FLT.@SCRATCH
+06E     @MULFF.@SCRATCH
+06E     @FLT.@SCRATCH
+06F     @MULFF.@SCRATCH
+070     @MULFF.@SCRATCH
+071     @MULFF.@SCRATCH
+071     @DIVFF.@SCRATCH
+072     @DIVFF.@SCRATCH
+073     @DIVFF.@SCRATCH
+074     @DIVFF.@SCRATCH
+075     @DIVFF.@SCRATCH
+076     @DIVFF.@SCRATCH
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+07B     @SCRATCH
+087     TRISC
+0A0     @ADDFF.@SCRATCH
+0A1     @ADDFF.@SCRATCH
+0A2     @ADDFF.@SCRATCH
+0A3     @ADDFF.@SCRATCH
+0A4     @ADDFF.@SCRATCH
+0A5     @ADDFF.@SCRATCH
+0A6     @ADDFF.@SCRATCH
+0A7     @ADDFF.@SCRATCH
+10D     @READ_PROGRAM_MEMORY.P1
+10D     @WRITE_PROGRAM_MEMORY.P2
+10F     @READ_PROGRAM_MEMORY.P1
+10F     @WRITE_PROGRAM_MEMORY.P2
+
+0335  @delay_ms1
+034C  main
+0004  @ITOF
+0023  @MULFF
+0098  @DIVFF
+0164  @ADDFF
+02D5  @FLT
+0314  @SFTOI
+034C  @cinit
+
+Project Files:
+    T6_E5.c
+    C:\Archivos de programa\PICC\devices\16F877.h
+
+Units:
+    E:\libro\ejemplos\T6_E5\T6_E5.c (main)
+
+Compiler Settings:
+    Processor:      PIC16F877
+    Pointer Size:   16
+    ADC Range:      0-1023
+    Opt Level:      0
+    Short,Int,Long: 1,8,16
+
+Output Files:
+    Errors:      E:\libro\ejemplos\T6_E5\T6_E5.err
+    Ext Symbols: E:\libro\ejemplos\T6_E5\T6_E5.esym
+    INHX8:       E:\libro\ejemplos\T6_E5\T6_E5.hex
+    Symbols:     E:\libro\ejemplos\T6_E5\T6_E5.sym
+    List:        E:\libro\ejemplos\T6_E5\T6_E5.lst
+    Debug/COFF:  E:\libro\ejemplos\T6_E5\T6_E5.cof
+    Call Tree:   T6_E5.tre
+    Statistics:  T6_E5.sta

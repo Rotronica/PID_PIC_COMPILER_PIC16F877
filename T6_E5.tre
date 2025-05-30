@@ -1,0 +1,18 @@
+읕T6_E5
+   읕main  0/460  Ram=72
+      쳐??0??
+      쳐@ITOF  0/31  Ram=2
+      쳐@MULFF  0/117  Ram=13
+      쳐@DIVFF  0/204  Ram=14
+      쳐@ADDFF  0/369  Ram=16
+      쳐@MULFF  0/117  Ram=13
+      쳐@ADDFF  0/369  Ram=16
+      쳐@ADDFF  0/369  Ram=16
+      쳐@MULFF  0/117  Ram=13
+      쳐@MULFF  0/117  Ram=13
+      쳐@ADDFF  0/369  Ram=16
+      쳐@ADDFF  0/369  Ram=16
+      쳐@FLT  0/63  Ram=10
+      쳐@FLT  0/63  Ram=10
+      쳐@SFTOI  0/33  Ram=4
+      읕@delay_ms1  0/23  Ram=1

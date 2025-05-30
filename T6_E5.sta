@@ -1,0 +1,63 @@
+
+ROM used: 1304 (16%)
+          1304 (16%) including unused fragments
+
+          4 Average locations per line
+          37 Average locations per statement
+
+RAM used: 79 (21%) at main() level
+          101 (27%) worst case
+
+Stack used: 1 worst case (out of 8 total available)
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+   53    35 100  T6_E5.c
+  280     0   0  C:\Archivos de programa\PICC\devices\16F877.h
+----- -----
+  333    35 Total
+
+Page ROM  %  RAM   Vol Diff  Functions:
+---- --- --- ---   --- ----  ----------
+0     23   2   1    35  1.6  @delay_ms1
+0    460  35  72  1356  7.1  main
+0     31   2   2   764  7.1  @ITOF
+0    117   9  13   498  4.8  @MULFF
+0    204  16  14   463  4.3  @DIVFF
+0    369  28  16   257  2.8  @ADDFF
+0     63   5  10   318  2.8  @FLT
+0     33   3   4   422  4.7  @SFTOI
+
+Program metrics:
+    Functions               8
+    Statements              35
+    Comments                91
+    Volume (V)              5999
+    Difficilty (D)          35.5
+    Effort to implement (E) 212943
+    Time to implement (T)   3 hours, 17 minutes
+    Est Delivered Bugs (B)  1
+    Cyclomatic Complexity   10
+    Maintainability (MI)    69
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00003     4  0  
+00004-007FF  1300  744  
+00800-00FFF     0  2048  
+01000-017FF     0  2048  
+01800-01FFF     0  2048  
+
+
+
+THE FOLLOWING IS TEMPORARY FOR DIAGNOSTIC USE ONLY:
+
+    n1    n2    N1    N2   v(G)
+     4     5     7     4     0    @delay_ms1
+    14    96   103    97     2    main
+    14    60    62    61     2    @ITOF
+    10    43    46    41     2    @MULFF
+     9    41    43    39     0    @DIVFF
+     6    27    26    25     1    @ADDFF
+     7    35    31    28     1    @FLT
+    10    37    41    35     2    @SFTOI
